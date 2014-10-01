@@ -484,7 +484,7 @@
 		local name    = cfg[field.."name"] or cfg.targetname or cfg.project.name
 		local dir     = cfg[field.."dir"] or cfg.targetdir or path.getrelative(cfg.location, cfg.basedir)
 		local prefix  = ""
-		local suffix  = ""
+		local suffix  = cfg[field.."suffix"] or cfg.targetsuffix or ""
 		local ext     = ""
 		local bundlepath, bundlename
 
@@ -498,7 +498,7 @@
 			end
 		elseif namestyle == "posix" then
 			if kind == "WindowedApp" and system == "macosx" then
-				bundlename = name .. ".app"
+				bundlename = name .. suffix .. ".app"
 				bundlepath = path.join(dir, bundlename)
 				dir = path.join(bundlepath, "Contents/MacOS")
 			elseif kind == "SharedLib" then
@@ -518,7 +518,6 @@
 		end
 
 		prefix = cfg[field.."prefix"] or cfg.targetprefix or prefix
-		suffix = cfg[field.."suffix"] or cfg.targetsuffix or suffix
 		ext    = cfg[field.."extension"] or cfg.targetextension or ext
 
 		-- build the results object
